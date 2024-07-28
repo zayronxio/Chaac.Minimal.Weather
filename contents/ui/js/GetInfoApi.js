@@ -8,8 +8,9 @@ function obtenerDatosClimaticos(latitud, longitud, fechaInicio, hours, callback)
          if (req.readyState === 4) {
              if (req.status === 200) {
                  let datos = JSON.parse(req.responseText);
-                 let isday = datos.current_units.is_day
                  let currents = datos.current;
+                 let isday = currents.is_day
+
                  let temperaturaActual = currents.temperature_2m;
                  let windSpeed = currents.wind_speed_10m;
                  let codeCurrentWeather = currents.weather_code;

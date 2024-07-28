@@ -3,7 +3,6 @@ import QtQuick.Controls 2.15
 import "../js/traductor.js" as Traduc
 import "../js/GetInfoApi.js" as GetInfoApi
 import "../js/geoCoordinates.js" as GeoCoordinates
-import "../js/GetCity.js" as GetCity
 import "../js/GetModelWeather.js" as GetModelWeather
 
 Item {
@@ -92,8 +91,9 @@ Item {
 
   property string uvtext: Traduc.uvRadiationText(codeleng)
   property string windSpeedText: Traduc.windSpeedText(codeleng)
-  property string isday: obtener(datosweather, 8)
+  property int isDay: obtener(datosweather, 8)
   property string city: ""
+  property string prefixIcon: isDay === 1 ? "" : "-night"
 
   Component.onCompleted: {
     updateWeather(2);
@@ -124,17 +124,6 @@ Item {
       completeCoordinates = result;
     });
   }
-
-  function getCityFuncion() {
-    if (!latitude || !longitud || latitude === "0" || longitud === "0") {
-        console.error("Coordenadas inválidas para la solicitud de ciudad");
-        return;
-    }
-    GetCity.getNameCity(latitude, longitud, codeleng, function(result) {
-        city = result;
-        console.log("Ciudad obtenida: " + city);
-    });
-}
 
   function getWeatherApi() {
     GetInfoApi.obtenerDatosClimaticos(latitude, longitud, day, currentTime, function(result) {
@@ -180,21 +169,8 @@ Item {
       99: "storm",
     };
     var iconName = "weather-" + (wmocodes[x] || "unknown");
-    var iconNamePresicion = isday === 1 ? iconName : iconName + "-" + "night";
+    var iconNamePresicion = iconName + prefixIcon
     return b === "preciso" ? iconNamePresicion : iconName;
-  }
-
-  function isday() {
-    var timeActual = Number(Qt.formatDateTime(new Date(), "h"));
-    if (timeActual < 6) {
-      if (timeActual > 19) {
-        return "night";
-      } else {
-        return "day";
-      }
-    } else {
-      return "day";
-    }
   }
 
   function updateWeather(x) {

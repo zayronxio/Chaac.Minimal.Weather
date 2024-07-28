@@ -15,7 +15,7 @@ ColumnLayout {
         id: weatherData
     }
 
-    property string temperatureUnit: plasmoid.configuration.temperatureUnit
+    property int temperatureUnit: Plasmoid.configuration.temperatureUnit
     function sumarDia(a) {
         var fechaActual = new Date();
         fechaActual.setDate(fechaActual.getDate() + a);
