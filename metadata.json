@@ -15,7 +15,7 @@
         "ServiceTypes": [
             "Plasma/Applet"
         ],
-        "Version": "2.3",
+        "Version": "2.4",
         "Website": "https://github.com/zayronxio/Chaac.Minimal.Weather"
     },
     "X-Plasma-API-Minimum-Version": "6.0",

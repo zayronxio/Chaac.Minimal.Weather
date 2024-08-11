@@ -17,7 +17,7 @@ Item {
     readonly property bool isVertical: Plasmoid.formFactor === PlasmaCore.Types.Vertical
     property string undefanchors: activeweathershottext ? undefined : parent.verticalCenter
     property bool textweather: Plasmoid.configuration.textweather
-    property bool activeweathershottext: heightH > 36
+    property bool activeweathershottext: heightH > 34
     property int fonssizes: Plasmoid.configuration.sizeFontConfig
     property int heightH: root.height
     property var widthWidget: activeweathershottext ? temOfCo.implicitWidth : temOfCo.implicitWidth + wrapper_weathertext.width
@@ -65,16 +65,20 @@ Item {
                 Label {
                     id: textGrados
                     height: parent.height
+                    width: parent.width - subtextGrados.implicitWidth
                     text: weatherData.temperaturaActual
                     font.bold: boldfonts
                     font.pixelSize: fonssizes
                     color: PlasmaCore.Theme.textColor
+                    horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
                 }
                 Label {
                     id: subtextGrados
                     height: parent.height
-                    text: (root.temperatureUnit === "0") ? " °C" : " °F"
+                    width: parent.width - textGrados.implicitWidth
+                    text: (root.temperatureUnit === "0") ? " °C " : " °F "
+                    horizontalAlignment: Text.AlignLeft
                     font.bold: boldfonts
                     font.pixelSize: fonssizes
                     color: PlasmaCore.Theme.textColor
