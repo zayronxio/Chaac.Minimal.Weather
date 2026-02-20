@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts 1.1
 import org.kde.plasma.plasmoid
 import org.kde.plasma.components 3.0 as PlasmaComponents3
+import org.kde.plasma.core as PlasmaCore
 import "components" as Components
 import org.kde.kirigami as Kirigami
 
@@ -15,6 +16,9 @@ ColumnLayout {
     }
 
     property int temperatureUnit: Plasmoid.configuration.temperatureUnit
+    property int fontColourMode: Plasmoid.configuration.fontColourMode
+    property string fontColour: Plasmoid.configuration.fontColour
+    readonly property color effectiveFontColour: (fontColourMode === 1 && fontColour !== "") ? fontColour : PlasmaCore.Theme.textColor
 
     function sumarDia(a) {
         var currentDay = (new Date()).getDay()
@@ -45,6 +49,7 @@ ColumnLayout {
                 text: temperatureUnit === 0 ? weatherData.temperaturaActual + "°C" : weatherData.temperaturaActual + "°F"
                 width: parent.width
                 font.pixelSize: currentWeather.height * 0.4
+                color: effectiveFontColour
                 horizontalAlignment: Text.AlignHCenter
             }
             PlasmaComponents3.Label {
@@ -52,12 +57,14 @@ ColumnLayout {
                 text: weatherData.weatherLongtext
                 width: parent.width
                 font.pixelSize: currentWeather.height * .18
+                color: effectiveFontColour
                 horizontalAlignment: Text.AlignHCenter
             }
             PlasmaComponents3.Label {
                 text: weatherData.textProbability + ": " + weatherData.probabilidadDeLLuvia + "%"
                 width: parent.width
                 font.pixelSize: currentWeather.height * .09
+                color: effectiveFontColour
                 horizontalAlignment: Text.AlignHCenter
             }
         }
@@ -81,6 +88,7 @@ ColumnLayout {
                 PlasmaComponents3.Label {
                     width: parent.width
                     text: days[sumarDia((modelData + 1))]
+                    color: effectiveFontColour
                     horizontalAlignment: Text.AlignHCenter
                 }
 
@@ -95,11 +103,13 @@ ColumnLayout {
                     PlasmaComponents3.Label {
                         id: max
                         text: modelData === 0 ? Math.round(weatherData.maxweatherTomorrow) + "°  " :  modelData === 1  ? Math.round(weatherData.maxweatherDayAftertomorrow) + "° " : modelData === 2 ? Math.round(weatherData.maxweatherTwoDaysAfterTomorrow) + "°  " : ""
+                        color: effectiveFontColour
                         horizontalAlignment: Text.AlignHCenter
                     }
                     PlasmaComponents3.Label {
                         id: min
                         text:  modelData === 0 ? Math.round(weatherData.minweatherTomorrow) + "°" :  modelData === 1  ? Math.round(weatherData.minweatherDayAftertomorrow) + "°" : modelData === 2 ? Math.round(weatherData.minweatherTwoDaysAfterTomorrow) + "°" : ""
+                        color: effectiveFontColour
                         opacity: .5
                         horizontalAlignment: Text.AlignHCenter
                     }

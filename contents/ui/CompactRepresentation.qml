@@ -20,6 +20,9 @@ Item {
     property bool activeweathershottext: heightH > 34
     property int fonssizes: Plasmoid.configuration.sizeFontConfig
     property int heightH: root.height
+    property int fontColourMode: Plasmoid.configuration.fontColourMode
+    property string fontColour: Plasmoid.configuration.fontColour
+    readonly property color effectiveFontColour: (fontColourMode === 1 && fontColour !== "") ? fontColour : PlasmaCore.Theme.textColor
     property var widthWidget: activeweathershottext ? temOfCo.implicitWidth : temOfCo.implicitWidth + wrapper_weathertext.width
     property var widthReal: isVertical ? root.width : initial.implicitWidth
     property var hVerti: wrapper_vertical.implicitHeight
@@ -69,7 +72,7 @@ Item {
                     text: weatherData.temperaturaActual
                     font.bold: boldfonts
                     font.pixelSize: fonssizes
-                    color: PlasmaCore.Theme.textColor
+                    color: effectiveFontColour
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -81,7 +84,7 @@ Item {
                     horizontalAlignment: Text.AlignLeft
                     font.bold: boldfonts
                     font.pixelSize: fonssizes
-                    color: PlasmaCore.Theme.textColor
+                    color: effectiveFontColour
                     verticalAlignment: Text.AlignVCenter
                 }
             }
@@ -95,6 +98,7 @@ Item {
                     text: weatherData.weatherShottext
                     font.pixelSize: fonssizes
                     font.bold: true
+                    color: effectiveFontColour
                     verticalAlignment: Text.AlignVCenter
                 }
             }
@@ -127,7 +131,7 @@ Item {
                 text: weatherData.temperaturaActual
                 font.bold: boldfonts
                 font.pixelSize: fonssizes
-                color: PlasmaCore.Theme.textColor
+                color: effectiveFontColour
                 horizontalAlignment: Text.AlignHCenter
             }
             Label {
@@ -136,7 +140,7 @@ Item {
                 text: (root.temperatureUnit === "0") ? " °C" : " °F"
                 font.bold: boldfonts
                 font.pixelSize: fonssizes
-                color: PlasmaCore.Theme.textColor
+                color: effectiveFontColour
                 horizontalAlignment: Text.AlignHCenter
             }
         }

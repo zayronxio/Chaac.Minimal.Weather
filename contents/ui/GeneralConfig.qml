@@ -16,6 +16,11 @@ Item {
         property var value
     }
 
+    QtObject {
+        id: fontColourModeValue
+        property var value
+    }
+
     signal configurationChanged
 
     property alias cfg_temperatureUnit: unidWeatherValue.value
@@ -25,6 +30,8 @@ Item {
     property alias cfg_useCoordinatesIp: autamateCoorde.checked
     property alias cfg_boldfonts: boldfont.checked
     property alias cfg_textweather: textweather.checked
+    property alias cfg_fontColourMode: fontColourModeValue.value
+    property alias cfg_fontColour: fontColourInput.text
 
     Kirigami.FormLayout {
         width: parent.width
@@ -87,6 +94,25 @@ Item {
             ]
             onActivated: fontsizeValue.value = currentValue
             Component.onCompleted: currentIndex = indexOfValue(fontsizeValue.value)
+        }
+        ComboBox {
+            textRole: "text"
+            valueRole: "value"
+            id: fontColourModeBox
+            Kirigami.FormData.label: i18n("Font Colour:")
+            model: [
+                {text: i18n("UI Theme"), value: 0},
+                {text: i18n("Custom"), value: 1},
+            ]
+            onActivated: fontColourModeValue.value = currentValue
+            Component.onCompleted: currentIndex = indexOfValue(fontColourModeValue.value)
+        }
+        TextField {
+            id: fontColourInput
+            visible: fontColourModeBox.currentValue === 1
+            Kirigami.FormData.label: i18n("Colour (HTML):")
+            placeholderText: "#ffffff"
+            width: 200
         }
     }
 
